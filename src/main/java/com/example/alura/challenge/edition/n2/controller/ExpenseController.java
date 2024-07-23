@@ -57,7 +57,6 @@ public class ExpenseController {
     ResponseEntity delete (@PathVariable Long id){
         var expense = expenseRepository.getReferenceById(id);
         expense.inactive();
-
         return ResponseEntity.noContent().build();
     }
 }

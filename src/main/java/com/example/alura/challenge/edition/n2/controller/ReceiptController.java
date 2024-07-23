@@ -30,7 +30,6 @@ public class ReceiptController {
         return receiptService.registerReceipt(dto, uriBuilder);
     }
 
-
     @GetMapping
     ResponseEntity list (@RequestParam(value = "description", required = false) String description, @PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
         return receiptService.listOptionalSearch(description, pageable);
@@ -41,6 +40,11 @@ public class ReceiptController {
         return ResponseEntity.ok(receiptRepository.findAllByYearAndMonth(pageable, year, month).map(ReceiptDetailedDTO::new));
     }
 
+    @GetMapping("/{id}")
+    ResponseEntity detail (@PathVariable Long id) {
+        var page = receiptRepository.findById(id).map(ReceiptDetailedDTO::new);
+        return ResponseEntity.ok(page);
+    }
 
     @PutMapping
     @Transactional
@@ -55,6 +59,4 @@ public class ReceiptController {
         receipt.inactive();
         return ResponseEntity.noContent().build();
     }
-
-
 }

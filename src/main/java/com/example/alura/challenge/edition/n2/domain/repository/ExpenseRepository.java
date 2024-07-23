@@ -16,7 +16,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long>, CustomR
     Optional<Expense> findByDescriptionAndYearAndMonth(@Param("description") String description, @Param("year") int year, @Param("month") int month);
 
     Page<Expense> findAllByDescriptionContaining(String description, Pageable pageable);
-    @Query("SELECT e FROM Expense e WHERE YEAR(e.date) = :year AND MONTH(e.date) = :month")
 
+    @Query("SELECT e FROM Expense e WHERE YEAR(e.date) = :year AND MONTH(e.date) = :month")
     Page<Expense> findAllByYearAndMonth(Pageable pageable, int year, int month);
 }
