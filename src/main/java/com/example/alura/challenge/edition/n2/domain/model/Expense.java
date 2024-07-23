@@ -3,13 +3,12 @@ package com.example.alura.challenge.edition.n2.domain.model;
 import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseRegisterDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseUpdateDTO;
-import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptUpdateDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 @SqlResultSetMapping(
         name = "FinancialSummaryMapping",
         columns = {
@@ -31,7 +30,7 @@ public class Expense {
     private Long id;
     private String description;
     private Double value;
-    private Date date;
+    private LocalDate date;
     private Boolean active;
     @Enumerated(EnumType.STRING)
      Category category;

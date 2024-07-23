@@ -1,24 +1,18 @@
 package com.example.alura.challenge.edition.n2.domain.service;
 
-import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseDTO;
-import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseDetailedDTO;
-import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseUpdateDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptDetailedDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptRegisterDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptUpdateDTO;
-import com.example.alura.challenge.edition.n2.domain.model.Expense;
 import com.example.alura.challenge.edition.n2.domain.model.Receipt;
 import com.example.alura.challenge.edition.n2.domain.repository.ReceiptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 @Service
 public class ReceiptService {
@@ -33,7 +27,7 @@ public class ReceiptService {
      * @return ReceiptDetailedDTO
      */
     public ResponseEntity registerReceipt(ReceiptRegisterDTO dto, UriComponentsBuilder uriBuilder) {
-        LocalDate receiptDate = dto.date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate receiptDate = dto.date();
         int year = receiptDate.getYear();
         int month = receiptDate.getMonthValue();
 
@@ -69,7 +63,7 @@ public class ReceiptService {
      */
     public ResponseEntity updateReceipt(ReceiptUpdateDTO dto, UriComponentsBuilder uriBuilder) {
         var receiptDTO = new ReceiptDTO(receiptRepository.getReferenceById(dto.id()));
-        LocalDate receiptDate = dto.date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate receiptDate = dto.date();
         int year = receiptDate.getYear();
         int month = receiptDate.getMonthValue();
         var existingReceipt = receiptRepository.findByDescriptionAndYearAndMonth(dto.description(), year, month);

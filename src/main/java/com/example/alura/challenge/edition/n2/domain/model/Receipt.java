@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Table (name = "receipts")
 @Entity (name = "Receipt")
@@ -21,7 +21,7 @@ public class Receipt {
     private Long id;
     private String description;
     private Double value;
-    private Date date;
+    private LocalDate date;
     private Boolean active;
 
 

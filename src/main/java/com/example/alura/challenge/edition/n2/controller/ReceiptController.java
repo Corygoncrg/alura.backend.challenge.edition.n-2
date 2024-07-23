@@ -3,7 +3,6 @@ package com.example.alura.challenge.edition.n2.controller;
 import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptDetailedDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptRegisterDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptUpdateDTO;
-import com.example.alura.challenge.edition.n2.domain.model.Receipt;
 import com.example.alura.challenge.edition.n2.domain.repository.ReceiptRepository;
 import com.example.alura.challenge.edition.n2.domain.service.ReceiptService;
 import jakarta.transaction.Transactional;
@@ -14,10 +13,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("receipt")

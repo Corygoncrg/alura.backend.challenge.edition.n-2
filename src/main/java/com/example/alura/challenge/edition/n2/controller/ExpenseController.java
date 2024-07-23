@@ -4,8 +4,6 @@ package com.example.alura.challenge.edition.n2.controller;
 import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseDetailedDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseRegisterDTO;
 import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseUpdateDTO;
-import com.example.alura.challenge.edition.n2.domain.dto.receipt.ReceiptDetailedDTO;
-import com.example.alura.challenge.edition.n2.domain.model.Expense;
 import com.example.alura.challenge.edition.n2.domain.repository.ExpenseRepository;
 import com.example.alura.challenge.edition.n2.domain.service.ExpenseService;
 import jakarta.transaction.Transactional;
