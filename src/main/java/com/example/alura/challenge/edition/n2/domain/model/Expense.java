@@ -64,6 +64,9 @@ public class Expense {
         if (dto.date() != null){
             this.date = dto.date();
         }
+        if (dto.category() != null){
+            this.category = dto.category();
+        }
     }
     public void inactive() {
         this.active = false;
