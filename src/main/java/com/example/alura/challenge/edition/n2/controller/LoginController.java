@@ -1,7 +1,7 @@
 package com.example.alura.challenge.edition.n2.controller;
 
 import com.example.alura.challenge.edition.n2.domain.dto.authentication.AuthenticationDTO;
-import com.example.alura.challenge.edition.n2.domain.service.AuthenticationService;
+import com.example.alura.challenge.edition.n2.domain.dto.authentication.TokenJWTDTO;
 import com.example.alura.challenge.edition.n2.domain.service.LoginService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping
-    private ResponseEntity<AuthenticationService> login(@RequestBody @Valid AuthenticationDTO dto) {
+    private ResponseEntity<TokenJWTDTO> login(@RequestBody @Valid AuthenticationDTO dto) {
         return loginService.login(dto);
     }
 

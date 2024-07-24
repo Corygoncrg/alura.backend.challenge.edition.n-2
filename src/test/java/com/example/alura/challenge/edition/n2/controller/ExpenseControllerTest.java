@@ -134,7 +134,7 @@ class ExpenseControllerTest {
 
         // Then
         assertEquals(200, responseEntity.getStatusCode().value());
-        assertEquals(Optional.of(expenseDetailedDTO), responseEntity.getBody());
+        assertEquals(expenseDetailedDTO, responseEntity.getBody());
     }
 
     @Test
@@ -157,8 +157,7 @@ class ExpenseControllerTest {
     @DisplayName("Should delete an expense")
     void deleteExpenseTest() {
         // Given
-        Expense expense = new Expense(1L, "descr", 69.00, localDate, true, Category.OTHER);
-        when(expenseRepository.getReferenceById(eq(1L))).thenReturn(expense);
+        when(expenseService.delete(eq(1L))).thenReturn(ResponseEntity.noContent().build());
 
         // When
         var responseEntity = expenseController.delete(1L);

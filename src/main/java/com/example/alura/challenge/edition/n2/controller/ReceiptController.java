@@ -8,6 +8,7 @@ import com.example.alura.challenge.edition.n2.domain.service.ReceiptService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -26,37 +27,35 @@ public class ReceiptController {
 
     @PostMapping
     @Transactional
-    ResponseEntity register (@RequestBody @Valid ReceiptRegisterDTO dto, UriComponentsBuilder uriBuilder) {
+    ResponseEntity<?> register (@RequestBody @Valid ReceiptRegisterDTO dto, UriComponentsBuilder uriBuilder) {
         return receiptService.registerReceipt(dto, uriBuilder);
     }
 
     @GetMapping
-    ResponseEntity list (@RequestParam(value = "description", required = false) String description, @PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
+    ResponseEntity<Page<ReceiptDetailedDTO>> list (@RequestParam(value = "description", required = false) String description, @PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
         return receiptService.listOptionalSearch(description, pageable);
     }
 
     @GetMapping("/{year}/{month}")
-    ResponseEntity listByDate (@PageableDefault(size = 10, sort = {"id"}) Pageable pageable, @PathVariable int year, @PathVariable int month) {
+    ResponseEntity<Page<ReceiptDetailedDTO>> listByDate (@PageableDefault(size = 10, sort = {"id"}) Pageable pageable, @PathVariable int year, @PathVariable int month) {
         return ResponseEntity.ok(receiptRepository.findAllByYearAndMonth(pageable, year, month).map(ReceiptDetailedDTO::new));
     }
 
     @GetMapping("/{id}")
-    ResponseEntity detail (@PathVariable Long id) {
-        var page = receiptRepository.findById(id).map(ReceiptDetailedDTO::new);
-        return ResponseEntity.ok(page);
+    ResponseEntity<ReceiptDetailedDTO> detail (@PathVariable Long id) {
+        var receipt = receiptRepository.findById(id).map(ReceiptDetailedDTO::new);
+        return receipt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping
     @Transactional
-    ResponseEntity update (@RequestBody @Valid ReceiptUpdateDTO dto, UriComponentsBuilder uriBuilder) {
+    ResponseEntity<?> update (@RequestBody @Valid ReceiptUpdateDTO dto, UriComponentsBuilder uriBuilder) {
         return receiptService.updateReceipt(dto, uriBuilder);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    ResponseEntity delete (@PathVariable Long id){
-        var receipt = receiptRepository.getReferenceById(id);
-        receipt.inactive();
-        return ResponseEntity.noContent().build();
+    ResponseEntity<Void> delete (@PathVariable Long id){
+        return receiptService.delete(id);
     }
 }

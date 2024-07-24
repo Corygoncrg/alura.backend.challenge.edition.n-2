@@ -8,6 +8,7 @@ import com.example.alura.challenge.edition.n2.domain.dto.expense.ExpenseUpdateDT
 import com.example.alura.challenge.edition.n2.domain.model.Expense;
 import com.example.alura.challenge.edition.n2.domain.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,11 @@ public class ExpenseService {
 
     /**
      * Method to register a new Expense into the database
-     * @param dto
-     * @param uriBuilder
-     * @return ExpenseDetailedDTO
+     * @param dto Data transfer object containing the details for a new Expense
+     * @param uriBuilder URI components builder for creating the URI of the created resource
+     * @return ResponseEntity<?>
      */
-    public ResponseEntity registerExpense(ExpenseRegisterDTO dto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> registerExpense(ExpenseRegisterDTO dto, UriComponentsBuilder uriBuilder) {
         LocalDate expenseDate = dto.date();
         int year = expenseDate.getYear();
         int month = expenseDate.getMonthValue();
@@ -44,11 +45,11 @@ public class ExpenseService {
 
     /**
      * Method that list all expenses, or the ones whose description contains the @RequestParam description
-     * @param description
-     * @param pageable
-     * @return
+     * @param description Optional description in which the repository will use to search for in the database
+     * @param pageable Pageable object for pagination information
+     * @return ResponseEntity<Page<ExpenseDetailedDTO>>
      */
-    public ResponseEntity listOptionalSearch(String description, Pageable pageable) {
+    public ResponseEntity<Page<ExpenseDetailedDTO>> listOptionalSearch(String description, Pageable pageable) {
         if (description == null) {
             return ResponseEntity.ok(expenseRepository.findAllByActiveTrue(pageable).map(ExpenseDetailedDTO::new));
         } else {
@@ -58,11 +59,11 @@ public class ExpenseService {
 
     /**
      * Method to update an existing Receipt in the database
-     * @param dto
-     * @param uriBuilder
-     * @return ExpenseDetailedDTO
+     * @param dto  Data transfer object containing updated expense details
+     * @param uriBuilder URI components builder for creating the URI of the updated resource
+     * @return ResponseEntity<?>
      */
-    public ResponseEntity updateExpense(ExpenseUpdateDTO dto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> updateExpense(ExpenseUpdateDTO dto, UriComponentsBuilder uriBuilder) {
         var expenseDTO = new ExpenseDTO(expenseRepository.getReferenceById(dto.id()));
         LocalDate expenseDate = dto.date();
         int year = expenseDate.getYear();
@@ -75,5 +76,16 @@ public class ExpenseService {
         expense.update(dto);
         var uri = uriBuilder.path("/receipt/{id}").buildAndExpand(expense.getId()).toUri();
         return ResponseEntity.created(uri).body(new ExpenseDetailedDTO(expense));
+    }
+
+    /**
+     * Method to turn the active boolean to false
+     * @param id Long id for the repository to search for in the database
+     * @return ResponseEntity<Void>
+     */
+    public ResponseEntity<Void> delete(Long id){
+        var expense = expenseRepository.getReferenceById(id);
+        expense.inactive();
+        return ResponseEntity.noContent().build();
     }
 }

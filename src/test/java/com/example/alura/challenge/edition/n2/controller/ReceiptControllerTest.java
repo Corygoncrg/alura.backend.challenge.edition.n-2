@@ -129,7 +129,7 @@ class ReceiptControllerTest {
 
         // Then
         assertEquals(200, responseEntity.getStatusCode().value());
-        assertEquals(Optional.of(receiptDetailedDTO), responseEntity.getBody());
+        assertEquals(receiptDetailedDTO, responseEntity.getBody());
     }
 
     @Test
@@ -152,8 +152,7 @@ class ReceiptControllerTest {
     @DisplayName("Should delete an receipt")
     void deleteExpenseTest() {
         // Given
-        Receipt receipt = new Receipt(1L, "descr", 69.00, localDate, true);
-        when(receiptRepository.getReferenceById(eq(1L))).thenReturn(receipt);
+        when(receiptService.delete(eq(1L))).thenReturn(ResponseEntity.noContent().build());
 
         // When
         var responseEntity = receiptController.delete(1L);

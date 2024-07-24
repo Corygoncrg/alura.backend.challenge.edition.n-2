@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService {
+
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private TokenService tokenService;
     @Autowired
     private AuthenticationManager manager;
 
-    public ResponseEntity login(AuthenticationDTO dto) {
+    public ResponseEntity<TokenJWTDTO> login(AuthenticationDTO dto) {
     var authenticationToken = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
     var authentication = manager.authenticate(authenticationToken);
     var tokenJWT = tokenService.createToken((User) authentication.getPrincipal());
