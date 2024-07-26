@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - ROOT_1=root
+      - ROOT_PASSWORD_1=123
+      - JWT_SECRET=123456
+    entrypoint: ["/app/wait-for-it.sh", "db", "--"]
+    command: ["./mvnw", "spring-boot:run"]
+
+  db:
+    image: "mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: alura_c2
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
