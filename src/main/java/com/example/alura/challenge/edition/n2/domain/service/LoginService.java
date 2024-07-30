@@ -20,6 +20,12 @@ public class LoginService {
     @Autowired
     private AuthenticationManager manager;
 
+
+    /**
+     * Method to return a token in the body when login is authenticated
+     * @param dto AuthenticationDTO with login and password values
+     * @return ResponseEntity<TokenJWTDTO>
+     */
     public ResponseEntity<TokenJWTDTO> login(AuthenticationDTO dto) {
     var authenticationToken = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
     var authentication = manager.authenticate(authenticationToken);

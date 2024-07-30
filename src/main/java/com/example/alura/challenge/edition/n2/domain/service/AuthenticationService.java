@@ -12,6 +12,12 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     private UserRepository repository;
 
+    /**
+     * Method to find a user in the database and return its details
+     * @param username String value containing username to search in database
+     * @return UserDetails
+     * @throws UsernameNotFoundException when user not found
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByLogin(username);

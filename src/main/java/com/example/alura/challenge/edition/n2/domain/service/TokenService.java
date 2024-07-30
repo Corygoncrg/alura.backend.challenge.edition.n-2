@@ -19,6 +19,12 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
+
+    /**
+     * Method to create a token when a user in sent
+     * @param user User object to get user from
+     * @return String
+     */
     public String createToken(User user) {
         try {
             var algorithm = Algorithm.HMAC256(secret);
@@ -32,6 +38,11 @@ public class TokenService {
         }
     }
 
+    /**
+     * Method to very tokenJWT
+     * @param tokenJWT String which contains a tokenJWT
+     * @return String
+     */
     public String getSubject(String tokenJWT) {
         try {
             var algorithm = Algorithm.HMAC256(secret);

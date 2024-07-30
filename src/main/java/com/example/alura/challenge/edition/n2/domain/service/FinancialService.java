@@ -17,6 +17,13 @@ public class FinancialService {
     @Autowired
     private ReceiptRepository receiptRepository;
 
+
+    /**
+     * Method to get the financial summary of a month by specifying the year and month of the search
+     * @param year int value of year
+     * @param month int value of month
+     * @return List<SummaryDTO>
+     */
     public List<SummaryDTO> getFinancialSummary(int year, int month) {
         return expenseRepository.getFinancialSummary(year, month);
     }
