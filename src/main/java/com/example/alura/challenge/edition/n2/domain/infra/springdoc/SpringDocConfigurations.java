@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,8 +29,7 @@ public class SpringDocConfigurations {
                                 .email("rodrigohajer11@hotmail.com"))
                         .license(new License()
                                 .name("Github")
-                                .url("https://github.com/Corygoncrg/alura.backend.challenge.edition.n-2.git")));
+                                .url("https://github.com/Corygoncrg/alura.backend.challenge.edition.n-2.git")))
+                .addSecurityItem(new SecurityRequirement().addList("bearer-key"));
     }
-
-
 }
