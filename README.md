@@ -18,3 +18,7 @@ For an easy creation of graphs that may provide useful information for the user
 
 * Manage expenses and receipts in a database using CRUD methods
 * Search for summaries of specific months of your choosing
+
+It comes with a predefined user for tests:
+login: example@email.com
+password: examplepswd
